@@ -35,14 +35,6 @@ $$@@$$$$$$$$``````````@@$$@@$$$$$$
 - The code must respect the [**good practices**](../good-practices/README.md).
 - It is recommended to have **test files** for [unit testing](https://go.dev/doc/tutorial/add-a-test).
 
-- Some **banner** files with a specific graphical template representation using ASCII will be given. The files are formatted in a way that is not necessary to change them.
-
-  - [shadow](shadow.txt)
-  - [standard](standard.txt)
-  - [thinkertoy](thinkertoy.txt)
-
-### Banner Format
-
 - Each character has a height of 8 lines.
 - Characters are separated by a new line `\n`.
 - Here is an example of ' ', '!' and '"'(one dot represents one space) :
