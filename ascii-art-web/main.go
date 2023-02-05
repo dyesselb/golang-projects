@@ -1,82 +1,112 @@
 package main
 
 import (
-	askiied "ascii-art-web/makeAscii"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
+	"text/template"
+
+	"acsii-art-web/functions"
 )
 
+type Errors struct {
+	Status  int
+	Message string
+}
+
 func main() {
-	http.HandleFunc("/", handler)
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-	fmt.Println("Link -->   " + "http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", home)
+	mux.HandleFunc("/ascii-art", result)
+	mux.Handle("/style/", http.StripPrefix("/style/", http.FileServer(http.Dir("style"))))
+	log.Println("Starting a web server on  http://127.0.0.1:8080")
+	http.ListenAndServe(":8080", mux)
 }
 
-type Data struct {
-	InitialWord  string
-	Str          string
-	Format       string
-	ErrorCode    int
-	ErrorMessage string
+func home(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		// 404
+		Errorhandler(w, http.StatusNotFound)
+		return
+	}
+	if r.Method != http.MethodGet {
+		w.Header().Set("Get", http.MethodGet)
+		// 405
+		Errorhandler(w, http.StatusMethodNotAllowed)
+		return
+	}
+	t, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		Errorhandler(w, 500)
+		return
+	}
+	err = t.Execute(w, nil)
+	if err != nil {
+		Errorhandler(w, 500)
+	}
 }
 
-func errorHandler(w http.ResponseWriter, status int) {
+func result(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/ascii-art" {
+		// 404
+		Errorhandler(w, http.StatusNotFound)
+		return
+	}
+	if r.Method != http.MethodPost {
+		w.Header().Set("Allow", http.MethodPost)
+		// 405
+		Errorhandler(w, http.StatusMethodNotAllowed)
+		return
+	}
+	t, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		Errorhandler(w, 500)
+		return
+	}
+	message := r.FormValue("text")
+	bannerName := r.FormValue("font")
+	for _, v := range message {
+		if (v < 32 || v > 126) && !(v == '\r' || v == '\n') {
+			Errorhandler(w, 400)
+			return
+		}
+	}
+	if bannerName == "" {
+		Errorhandler(w, 400)
+		return
+	}
+	banner, err2 := functions.MakeMapOfBanner(bannerName)
+	if err2 != nil {
+		Errorhandler(w, http.StatusInternalServerError)
+		return
+	}
+	word, err1 := functions.MakeGraphicWord(banner, message)
+	if err1 != nil {
+		Errorhandler(w, 400)
+		return
+	}
+	err = t.Execute(w, word)
+	if err != nil {
+		Errorhandler(w, 500)
+		return
+	}
+}
+
+func Errorhandler(w http.ResponseWriter, status int) {
+	var ErrResult Errors
+	ErrResult.Status = status
+	ErrResult.Message = http.StatusText(status)
+	html, err := template.ParseFiles("templates/error.html")
+	if err != nil {
+		w.WriteHeader(status)
+		fmt.Fprintf(w, "%s %d", ErrResult.Message, status)
+		return
+	}
 	w.WriteHeader(status)
-	_, err := template.ParseFiles("templates/error.html")
+	err = html.Execute(w, ErrResult)
 	if err != nil {
-		fmt.Fprintf(w, "Internal server error!")
+		w.WriteHeader(status)
+		fmt.Fprintf(w, "%s %d", ErrResult.Message, status)
 		return
 	}
-	if status == http.StatusNotFound {
-		renderTemplate(w, "error", Data{ErrorCode: status, ErrorMessage: "Page not found!"})
-	}
-	if status == http.StatusBadRequest {
-		renderTemplate(w, "error", Data{ErrorCode: status, ErrorMessage: "Bad request!"})
-	}
-	if status == http.StatusInternalServerError {
-		renderTemplate(w, "error", Data{ErrorCode: status, ErrorMessage: "Internal Server Error!"})
-	}
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" && r.Method == "GET" {
-		renderTemplate(w, "home", Data{InitialWord: "", Format: "standard"})
-		return
-	}
-	if r.URL.Path == "/ascii-art" && r.Method == "POST" {
-		if err := r.ParseForm(); err != nil {
-			fmt.Fprintf(w, "ParseForm() err: %v", err)
-			return
-		}
-		str := r.PostForm["str"]
-		if len(str[0]) == 0 {
-			renderTemplate(w, "home", Data{InitialWord: "", Format: "standard"})
-			return
-		}
-		format := r.PostForm["format"]
-		res, err := askiied.Askiied(str[0], format[0])
-		if err != 0 {
-			errorHandler(w, err)
-			return
-		}
-		renderTemplate(w, "home", Data{InitialWord: str[0], Str: res, Format: format[0]})
-		return
-	}
-	if r.URL.Path == "/ascii-art" || r.URL.Path == "/" {
-		errorHandler(w, 400)
-		return
-	}
-	errorHandler(w, 404)
-}
-
-func renderTemplate(w http.ResponseWriter, tmpl string, data Data) {
-	t, err := template.ParseFiles("templates/" + tmpl + ".html")
-	if err != nil {
-		errorHandler(w, 500)
-		return
-	}
-	t.Execute(w, data)
 }

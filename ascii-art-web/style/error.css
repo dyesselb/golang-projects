@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+    background-image: url("/style/images/errorbackimg.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+
+    }
+h1 {
+    font-size: 80px;
+    color: rgba(170, 120, 13, 0.966);
+}
+h2 {
+    color: rgba(170, 120, 13, 0.966);
+    font-size: 50px;
+}

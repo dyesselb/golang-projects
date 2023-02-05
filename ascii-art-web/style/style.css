@@ -1,0 +1,133 @@
+
+
+h1 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+  font-size: 80px;
+  color: hsl(33, 85%, 16%);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.output {
+  margin-top: 30px;
+}
+
+body {
+  justify-content: center;
+  text-align: center;
+  background-size: 100%;
+  background-image: url(images/backgroundimg.jpg);
+  line-height: 1.5;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+header,
+nav,
+main,
+footer {
+  padding: 2px, calc((100%-800px)/2)0;
+}
+
+.Text_Area {
+  justify-content: center;
+}
+
+::placeholder {
+  color: black;
+  opacity: 0.6;
+  font-size:80%;
+  text-align: left;
+}
+
+textarea {
+  margin: auto;
+  height: 150px;
+  border: 2px solid hsl(44, 90%, 19%);
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  overflow: scroll;
+  padding-left: 10px;
+  max-width: 50%;
+  align-items: center;
+}
+
+select {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid hsl(44, 90%, 19%);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  padding: 12px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+
+input {
+  background-color: rgb(253, 231, 133);
+  border: 2px solid hsl(44, 90%, 19%);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  padding: 13px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 650px) {
+  textarea {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  textarea {
+    height: 100px;
+    min-height: 30%;
+  }
+}
+
+@media (max-width:600px) {
+  h1 {
+    font-size: 40px;
+  }
+  .Text_Area{
+    justify-content: center;
+  }
+}
+
+h2 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+  font-size: 40px;
+  color: hsl(33, 85%, 16%);
+}
+
+h3 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+  font-size: 40px;
+  color: hsl(33, 85%, 16%);
+}
+
+.result {
+  margin: auto;
+  height: 250px;
+  border: 2px solid hsl(44, 90%, 19%);
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  overflow: scroll;
+  padding-left: 10px;
+  max-width: 50%;
+  align-items: center;
+}
