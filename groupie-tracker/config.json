@@ -1,0 +1,8 @@
+{
+  "is_debug": true,
+  "listen": {
+    "protocol": "tcp",
+    "bind_ip": "0.0.0.0",
+    "port": "4000"
+  }
+}
