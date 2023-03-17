@@ -1,0 +1,54 @@
+.label {
+  text-align: center;
+  color: rgb(73, 23, 104);
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+
+.container {
+  margin-top: 30px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 80px;
+}
+
+.cardimg {
+border-radius: 50%;
+border-color: rgb(255, 0, 191);
+background-color: rgba(250, 235, 215, 0.359);
+box-shadow: 1px 5px 10px 10px rgb(247, 102, 227);
+padding: 20px;
+}
+
+.cardimg:hover {
+  background-color: rgba(0, 0, 0, 0.621);
+  box-shadow:  1px 5px 10px 10px gold;
+padding: 20px;
+}
+
+.search {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.textintput {
+  background: rgb(243, 182, 255);
+  max-height: 50px;
+  max-width:500px;
+  border-style: groove;
+  border-width: 1mm;
+  border-color: rgb(97, 41, 116);
+  word-wrap: break-word;
+}
+
+.button {
+  background: rgb(243, 182, 255);
+  width: 80px;
+  height: 50px;
+  border-radius: 10%;
+  font-weight: bold;
+}

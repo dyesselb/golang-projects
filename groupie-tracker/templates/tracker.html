@@ -1,0 +1,39 @@
+{{ define "content"}} 
+<section class="info" >
+  <img class="artistimg" src="{{.Singer.Image}}" />
+  <div class="text">
+    <h1>{{.Singer.Name}}</h1>
+    <p class="atristbio" >
+    {{.Singer.Name}} {{.Text}}
+    </p>
+  </div>
+  <div class="members">
+    <h3>{{.Type}}</h3>
+    <ul>
+      {{range .Singer.Members}}
+      <li>{{.}}</li>
+      {{end}}
+    </ul>
+  </div>
+</section>
+<section class="arttable">
+  <div class="table1">
+    <table class="table">
+      <caption>
+        <h2>List of famous concerts</h2>
+      </caption>
+      <tr>
+        <th>Location</th>
+        <th>Date</th>
+      </tr>
+      {{range $key, $value := .Relation.DatesLocations}}
+      <tr>
+        <td>{{$key}}</td>
+        <td>{{$value}}</td>
+      </tr>
+      {{end}}
+    </table>
+  </div>
+  
+</section>
+{{end}}

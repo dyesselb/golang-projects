@@ -1,0 +1,33 @@
+{{ define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/css/artists.css" />
+    <link rel="stylesheet" href="/style/css/template.css" />
+    <link rel="stylesheet" href="/style/css/error.css" />
+    <link rel="stylesheet" href="/style/css/one-artist.css" />
+    <link
+      rel="shortcut icon"
+      href="/style/icons/icon.jpg"
+      type="image/x-icon"
+    />
+    <title>Groupie tracker</title>
+  </head>
+  <body>
+    <section class="header">
+      <header>
+        <a href="/"><img class="logo" src="/style/pictures/log.jpg" /></a>
+      </header>
+    </section>
+
+    <main>
+      <hr class="hr-line" />
+      {{ template "content" .}}
+    </main>
+    <footer></footer>
+  </body>
+</html>
+{{end}}
